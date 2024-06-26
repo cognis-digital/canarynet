@@ -37,3 +37,4 @@
 2026-01-17T08:44:04  chore: tip of the hat to Thinkst, Bellingcat, and SigmaHQ
 2026-05-02T15:01:11  fix: works on my machine (TM)
 2024-06-07T14:42:42  test(scan): stream large files without buffering
+2024-06-26T09:59:49  fix(report): trim whitespace in parsed fields
