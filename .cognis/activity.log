@@ -41,3 +41,4 @@
 2024-07-15T16:16:56  docs(ci): handle empty and malformed input
 2024-08-05T11:33:03  refactor(scan): add a JSON schema for output
 2024-08-24T18:50:10  test(fixtures): add usage examples to help
+2024-09-14T13:07:17  chore: IRONCLAD hardening pass
