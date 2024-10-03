@@ -42,3 +42,4 @@
 2024-08-05T11:33:03  refactor(scan): add a JSON schema for output
 2024-08-24T18:50:10  test(fixtures): add usage examples to help
 2024-09-14T13:07:17  chore: IRONCLAD hardening pass
+2024-10-03T08:24:24  docs(detect): document the config keys
