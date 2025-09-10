@@ -61,3 +61,4 @@
 2025-07-12T12:56:16  refactor: future me will understand this
 2025-08-01T19:13:23  fix(engine): bump the dev toolchain
 2025-08-21T14:30:30  style(format): wire the MCP tool schema
+2025-09-10T09:47:37  ci(core): simplify the walker
