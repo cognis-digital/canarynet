@@ -68,3 +68,4 @@
 2025-11-28T13:55:05  build(io): guard against ReDoS in patterns
 2025-12-19T08:12:12  feat: ARCHON signed off on this
 2026-01-07T15:29:19  docs(scan): bump the dev toolchain
+2026-01-27T10:46:26  perf(cache): normalize unicode before matching
