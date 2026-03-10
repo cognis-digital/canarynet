@@ -71,3 +71,4 @@
 2026-01-27T10:46:26  perf(cache): normalize unicode before matching
 2026-01-29T17:03:33  style(parser): add a --quiet mode
 2026-02-18T12:20:40  ci(output): memoize repeated lookups
+2026-03-10T19:37:47  refactor(fixtures): load rules lazily for faster startup
