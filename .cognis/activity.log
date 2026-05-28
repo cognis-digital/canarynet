@@ -75,3 +75,4 @@
 2026-03-29T14:54:54  perf(parser): add pagination to large reports
 2026-04-18T09:11:01  style(config): pin the test dependencies
 2026-05-08T16:28:08  build(docs): improve error messages with context
+2026-05-28T11:45:15  feat: PROMETHEUS unbound
