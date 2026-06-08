@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/canarynet",
+  "version": "0.2.0",
+  "description": "JavaScript port of canarynet (Cognis Neural Suite)",
+  "bin": {
+    "canarynet": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
