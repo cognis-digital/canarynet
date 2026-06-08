@@ -1,29 +1,11 @@
-"""CANARYNET - self-hosted canary token network.
-
-Generate decoy artifacts (AWS keys, DNS hostnames, doc/web URLs) that have no
-legitimate use. When an attacker touches one, the access shows up in your logs
-and CANARYNET flags it. Inspired by thinkst/canarytokens, but fully self-hosted
-and standard-library only.
-"""
-from .core import (
-    Token,
-    TokenStore,
-    Alert,
-    new_token,
-    scan_logs,
-    TOKEN_TYPES,
-)
-
-TOOL_NAME = "canarynet"
-TOOL_VERSION = "1.0.0"
-
-__all__ = [
-    "Token",
-    "TokenStore",
-    "Alert",
-    "new_token",
-    "scan_logs",
-    "TOKEN_TYPES",
-    "TOOL_NAME",
-    "TOOL_VERSION",
-]
+"""canarynet — part of the Cognis Neural Suite."""
+try:  # re-export the tool's public API + identity from core
+    from canarynet.core import *  # noqa: F401,F403
+except Exception:  # pragma: no cover
+    pass
+try:
+    from canarynet.core import TOOL_NAME, TOOL_VERSION
+except Exception:  # pragma: no cover
+    TOOL_NAME = "canarynet"
+    TOOL_VERSION = "0.1.0"
+__version__ = TOOL_VERSION
