@@ -1,0 +1,8 @@
+10.0.0.14 - - [08/Jun/2026:09:12:01 +0000] "GET /index.html HTTP/1.1" 200 1043 "-" "Mozilla/5.0"
+10.0.0.27 - - [08/Jun/2026:09:12:44 +0000] "GET /assets/app.js HTTP/1.1" 200 88210 "-" "Mozilla/5.0"
+198.51.100.7 - - [08/Jun/2026:09:14:09 +0000] "GET /c/EXAMPLECANARY HTTP/1.1" 200 12 "-" "curl/8.4.0"
+203.0.113.55 - - [08/Jun/2026:09:15:31 +0000] "GET /favicon.ico HTTP/1.1" 404 0 "-" "Mozilla/5.0"
+DNS query: type=A name=lookup.example.com client=10.0.0.5
+DNS query: type=A name=EXAMPLECANARY.canary.example.com client=192.0.2.99
+# CloudTrail-ish line for an AWS canary key trigger:
+{"eventName":"GetCallerIdentity","userIdentity":{"accessKeyId":"AKIAEXAMPLEDECOY0000"},"sourceIPAddress":"192.0.2.200"}

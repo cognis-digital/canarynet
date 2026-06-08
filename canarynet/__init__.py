@@ -1,11 +1,29 @@
-"""
-CANARYNET — Self-hosted canary token network — AWS keys, DNS, docs, web URLs
-Part of the Cognis Neural Suite by Cognis Digital.
-https://cognis.digital · MIT License
-"""
-from canarynet.core import scan, TOOL_NAME, TOOL_VERSION
+"""CANARYNET - self-hosted canary token network.
 
-__version__ = TOOL_VERSION
-__author__ = "Cognis Digital"
-__license__ = "MIT"
-__all__ = ["scan", "TOOL_NAME", "TOOL_VERSION", "__version__"]
+Generate decoy artifacts (AWS keys, DNS hostnames, doc/web URLs) that have no
+legitimate use. When an attacker touches one, the access shows up in your logs
+and CANARYNET flags it. Inspired by thinkst/canarytokens, but fully self-hosted
+and standard-library only.
+"""
+from .core import (
+    Token,
+    TokenStore,
+    Alert,
+    new_token,
+    scan_logs,
+    TOKEN_TYPES,
+)
+
+TOOL_NAME = "canarynet"
+TOOL_VERSION = "1.0.0"
+
+__all__ = [
+    "Token",
+    "TokenStore",
+    "Alert",
+    "new_token",
+    "scan_logs",
+    "TOKEN_TYPES",
+    "TOOL_NAME",
+    "TOOL_VERSION",
+]
