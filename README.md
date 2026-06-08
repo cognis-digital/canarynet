@@ -36,7 +36,8 @@ Self-hosted canary token network — AWS keys, DNS, docs, web URLs — without s
 <a name="features"></a>
 ## Features
 
-- ✅ Scan
+- ✅ New Token
+- ✅ Scan Logs
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
