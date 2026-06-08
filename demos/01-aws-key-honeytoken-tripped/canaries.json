@@ -1,0 +1,18 @@
+[
+  {
+    "id": "aws-prod-readonly",
+    "type": "aws_access_key",
+    "triggered": true,
+    "src_ip": "203.0.113.7",
+    "ua": "Boto3 Python/3.9",
+    "ts": "2026-06-08T10:32:14Z"
+  },
+  {
+    "id": "aws-prod-admin",
+    "type": "aws_access_key",
+    "triggered": true,
+    "src_ip": "185.220.101.5",
+    "ua": "curl/7.88",
+    "ts": "2026-06-08T10:35:02Z"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "finance-acquisition-target.docx",
+    "type": "document_open",
+    "triggered": true,
+    "src_ip": "10.0.5.42",
+    "user": "intern-2024-08",
+    "ts": "2026-06-08T14:01:00Z"
+  },
+  {
+    "id": "hr-layoff-list.xlsx",
+    "type": "document_open",
+    "triggered": true,
+    "src_ip": "10.0.5.42",
+    "user": "intern-2024-08",
+    "ts": "2026-06-08T14:03:11Z"
+  }
+]

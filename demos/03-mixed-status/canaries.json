@@ -1,0 +1,20 @@
+[
+  {
+    "id": "aws-key-dev",
+    "type": "aws_access_key",
+    "triggered": false,
+    "expired": false
+  },
+  {
+    "id": "docs-canary-finance",
+    "type": "document_open",
+    "triggered": false,
+    "expired": true
+  },
+  {
+    "id": "web-canary-admin",
+    "type": "web_url",
+    "triggered": true,
+    "src_ip": "45.83.65.7"
+  }
+]
