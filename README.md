@@ -1,168 +1,87 @@
-<a name="top"></a>
-<div align="center">
+# CANARYNET — Self-hosted canary token network — AWS keys, DNS, docs, web URLs
 
-<img src="https://capsule-render.vercel.app/api?type=rect&color=0:6b46c1,100:2b6cb0&height=120&section=header&text=CANARYNET&fontSize=48&fontColor=ffffff&fontAlignY=58" width="100%" alt="CANARYNET"/>
+> Part of the **[Cognis Neural Suite](https://github.com/cognis-digital)** by [Cognis Digital](https://cognis.digital)
+> Cognis Open Collaboration License (COCL) v1.0 · domain: `blue-team`
 
-# CANARYNET
+[![PyPI](https://img.shields.io/pypi/v/cognis-canarynet.svg)](https://pypi.org/project/cognis-canarynet/)
+[![CI](https://github.com/cognis-digital/canarynet/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/canarynet/actions)
+[![License: COCL 1.0](https://img.shields.io/badge/License-COCL%201.0-2b6cb0.svg)](LICENSE)
+[![Suite](https://img.shields.io/badge/Cognis-Neural%20Suite-6b46c1.svg)](https://github.com/cognis-digital)
 
-### Self-hosted canary token network — AWS keys, DNS, docs, web URLs
-
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=3500&pause=1000&color=6B46C1&center=true&vCenter=true&width=720&lines=Selfhosted+canary+token+network++AWS+keys+DNS+docs+web+URLs;Self-hostable+%C2%B7+MCP-native+%C2%B7+CI-ready+%C2%B7+polyglot" width="720"/>
-
-[![PyPI](https://img.shields.io/pypi/v/cognis-canarynet.svg?color=6b46c1)](https://pypi.org/project/cognis-canarynet/) [![CI](https://github.com/cognis-digital/canarynet/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/canarynet/actions) [![License: COCL 1.0](https://img.shields.io/badge/License-COCL%201.0-2b6cb0.svg)](LICENSE) [![Suite](https://img.shields.io/badge/Cognis-Neural%20Suite-6b46c1.svg)](https://github.com/cognis-digital)
+**Self-hosted canary token network — AWS keys, DNS, docs, web URLs.**
 
 *Blue Team / Defense — detection, deception, and monitoring for small teams.*
 
-</div>
+## Why
+
+Security and intelligence teams need self-hosted canary token network — AWS keys, DNS, docs, web URLs without standing up heavyweight infrastructure. `canarynet` is single-purpose, scriptable, CI-friendly, and self-hostable: point it at a target, get prioritized findings in the format your workflow already speaks (table, JSON, SARIF, HTML), and wire it into agents over MCP when you want it autonomous.
+
+## Install
 
 ```bash
 pip install cognis-canarynet
-canarynet scan .            # → prioritized findings in seconds
+# or, from this repo:
+pip install -e ".[dev]"
 ```
 
-## Contents
-
-- [Why canarynet?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
-
-<a name="why"></a>
-## Why canarynet?
-
-Self-hosted canary token network — AWS keys, DNS, docs, web URLs — without standing up heavyweight infrastructure.
-
-`canarynet` is single-purpose, scriptable, and self-hostable: point it at a target, get prioritized results in the format your workflow already speaks (table · JSON · SARIF), gate CI on it, and let agents drive it over MCP.
-
-<div align="right"><a href="#top">↑ back to top</a></div>
-
-<a name="features"></a>
-## Features
-
-- ✅ New Token
-- ✅ Scan Logs
-- ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
-- ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
-
-<div align="right"><a href="#top">↑ back to top</a></div>
-
-<a name="quick-start"></a>
 ## Quick start
 
 ```bash
-pip install cognis-canarynet
 canarynet --version
-canarynet scan .                       # scan current project
-canarynet scan . --format json         # machine-readable
-canarynet scan . --fail-on high        # CI gate (non-zero exit)
+canarynet scan demos/                      # run against the bundled demo
+canarynet scan demos/ --format sarif --out r.sarif --fail-on high
+canarynet scan demos/ --format html --out report.html
+canarynet mcp                              # expose as an MCP server (Cognis.Studio / Claude Desktop / Cursor)
 ```
 
-<div align="right"><a href="#top">↑ back to top</a></div>
+## Built-in demo scenarios
 
-<a name="example"></a>
-## Example
+Each scenario folder includes a `SCENARIO.md` describing the situation and the findings to expect.
 
-```text
-$ canarynet scan .
-  [HIGH    ] CAN-001  example finding             (./src/app.py)
-  [MEDIUM  ] CAN-002  another signal              (./config.yaml)
+- [`demos/01-aws-key-honeytoken-tripped/`](demos/01-aws-key-honeytoken-tripped/SCENARIO.md)
+- [`demos/01-basic/`](demos/01-basic/SCENARIO.md)
+- [`demos/02-document-canary-tripped/`](demos/02-document-canary-tripped/SCENARIO.md)
+- [`demos/03-mixed-status/`](demos/03-mixed-status/SCENARIO.md)
 
-  2 findings · risk score 5 · 38ms
-```
+## Output formats
 
-<div align="right"><a href="#top">↑ back to top</a></div>
+- **Table** (default) — human-readable terminal summary
+- **JSON** — machine-readable findings for pipelines
+- **SARIF** — drops into GitHub code-scanning / IDE problem panes
+- **HTML** — shareable report with severity rollups
 
-<a name="architecture"></a>
-## Architecture
+## Credits / Built on
 
-```mermaid
-flowchart LR
-  A[Input: file / dir / API] --> B[Collectors]
-  B --> C[Rules / Analyzers]
-  C --> D[Scorer]
-  D --> E{Reporters}
-  E --> F[Table]
-  E --> G[JSON / SARIF]
-  E --> H[MCP tool -. drives .-> AI agents]
-```
+Cognis composes and credits the best of open source. This tool builds on / interoperates with:
 
-<div align="right"><a href="#top">↑ back to top</a></div>
+- [`thinkst/canarytokens`](https://github.com/thinkst/canarytokens) — fork base (Thinkst)
+- [`thinkst/opencanary`](https://github.com/thinkst/opencanary) — daemon reference
 
-<a name="ai-stack"></a>
-## Use it from any AI stack
+Missing a credit? Open a PR — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-`canarynet` is interoperable with every popular way of using AI:
+## How it fits the Cognis Neural Suite
 
-- **MCP server** — `canarynet mcp` (Claude Desktop, Cursor, Cognis.Studio, [uncensored-fleet](https://github.com/cognis-digital/uncensored-fleet))
-- **OpenAI-compatible / JSON** — pipe `canarynet scan . --format json` into any agent or LLM
-- **LangChain · CrewAI · AutoGen · LlamaIndex** — wrap the CLI/JSON as a tool in one line
-- **CI / scripts** — exit codes + SARIF for non-AI pipelines
+`canarynet` is one of **52 tools** in the [Cognis Neural Suite](https://github.com/cognis-digital). Every tool ships an MCP server, so [Cognis.Studio](https://cognis.studio) agents can call them as scoped capabilities.
 
-<div align="right"><a href="#top">↑ back to top</a></div>
+**Sibling tools in `blue-team`:** [`sentrylog`](https://github.com/cognis-digital/sentrylog), [`edrgap`](https://github.com/cognis-digital/edrgap), [`phishforge`](https://github.com/cognis-digital/phishforge), [`sbomgate`](https://github.com/cognis-digital/sbomgate), [`honeytrace`](https://github.com/cognis-digital/honeytrace)
 
-<a name="how-it-compares"></a>
-## How it compares
+## Architecture & roadmap
 
-| | **Cognis canarynet** | thinkst |
-|---|:---:|:---:|
-| Self-hostable, no account | ✅ | varies |
-| Single command, zero config | ✅ | ⚠️ |
-| JSON + SARIF for CI | ✅ | varies |
-| MCP-native (AI agents) | ✅ | ❌ |
-| Polyglot ports (JS/Go/Rust) | ✅ | ❌ |
-| Open license | ✅ COCL | varies |
+- Design notes: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+- Planned work: [`ROADMAP.md`](ROADMAP.md)
 
-*Built in the spirit of **thinkst/canarytokens**, re-framed the Cognis way. Missing a credit? Open a PR.*
-
-<div align="right"><a href="#top">↑ back to top</a></div>
-
-<a name="integrations"></a>
-## Integrations
-
-Pipes into your stack: **SARIF** for code-scanning, **JSON** for anything, an **MCP server** (`canarynet mcp`) for AI agents, and a webhook forwarder for SIEM/Slack/Jira. See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md).
-
-<div align="right"><a href="#top">↑ back to top</a></div>
-
-<a name="install-anywhere"></a>
-## Install — every way, every platform
-
-```bash
-pip install "git+https://github.com/cognis-digital/canarynet.git"    # pip (works today)
-pipx install "git+https://github.com/cognis-digital/canarynet.git"   # isolated CLI
-uv tool install "git+https://github.com/cognis-digital/canarynet.git" # uv
-pip install cognis-canarynet                                          # PyPI (when published)
-docker run --rm ghcr.io/cognis-digital/canarynet:latest --help        # Docker
-brew install cognis-digital/tap/canarynet                             # Homebrew tap
-curl -fsSL https://raw.githubusercontent.com/cognis-digital/canarynet/main/install.sh | sh
-```
-
-| Linux | macOS | Windows | Docker | Cloud |
-|---|---|---|---|---|
-| `scripts/setup-linux.sh` | `scripts/setup-macos.sh` | `scripts/setup-windows.ps1` | `docker run ghcr.io/cognis-digital/canarynet` | [DEPLOY.md](docs/DEPLOY.md) (AWS/Azure/GCP/k8s) |
-
-<div align="right"><a href="#top">↑ back to top</a></div>
-
-<a name="related"></a>
-## Related Cognis tools
-
-- [`sentrylog`](https://github.com/cognis-digital/sentrylog) — Single-file SIEM for small teams — Sigma rules + multi-source ingest
-- [`edrgap`](https://github.com/cognis-digital/edrgap) — EDR coverage & bypass detector — reconciles MDM + EDR + AD inventories
-- [`phishforge`](https://github.com/cognis-digital/phishforge) — Open-source phishing simulation — campaigns, templates, training
-- [`sbomgate`](https://github.com/cognis-digital/sbomgate) — Continuous SBOM diff & vulnerability watch with maintainer-change tracking
-- [`honeytrace`](https://github.com/cognis-digital/honeytrace) — Active-decoy network lure system — SSH, RDP, SMB, web honeypots
-
-**Explore the suite →** [🗂️ all 170+ tools](https://github.com/cognis-digital/cognis-neural-suite) · [⭐ awesome-cognis](https://github.com/cognis-digital/awesome-cognis) · [🔗 cognis-sources](https://github.com/cognis-digital/cognis-sources) · [🤖 uncensored-fleet](https://github.com/cognis-digital/uncensored-fleet) · [🧠 hermes](https://github.com/cognis-digital/hermes)
-
-<div align="right"><a href="#top">↑ back to top</a></div>
-
-<a name="contributing"></a>
 ## Contributing
 
-PRs, new rules, and demo scenarios are welcome under the collaboration-pull model — see [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
-
-> ### ⭐ If `canarynet` saved you time, **star it** — it genuinely helps others find it.
+PRs, new detections, and demo scenarios are welcome under the collaboration-pull model. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## License
 
 Source-available under the **Cognis Open Collaboration License (COCL) v1.0** — free for personal, internal-evaluation, research, and educational use; **commercial / production use requires a license** (licensing@cognis.digital). See [LICENSE](LICENSE).
 
----
+## Responsible use
 
-<div align="center"><sub><b><a href="https://cognis.digital">Cognis Digital</a></b> · one of 170+ tools in the <a href="https://github.com/cognis-digital/cognis-neural-suite">Cognis Neural Suite</a> · <i>Making Tomorrow Better Today</i></sub></div>
+This is dual-use security software. Use it only against systems, data, and identities you own or are explicitly authorized in writing to test, and in compliance with applicable law.
+
+## About
+
+**[Cognis Digital](https://cognis.digital)** — Wyoming, USA · *Making Tomorrow Better Today: Advanced Cybersecurity, AI Innovation, and Blockchain Expertise.*
