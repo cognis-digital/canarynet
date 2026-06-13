@@ -12,6 +12,31 @@
 
 *Blue Team / Defense — detection, deception, and monitoring for small teams.*
 
+## Usage — step by step
+
+1. **Install** the `canarynet` command:
+   ```bash
+   pip install cognis-canarynet   # or: pip install -e .   from this repo
+   ```
+2. **Mint a token.** `new TYPE LABEL` persists a token to the store (`TYPE` is `aws`, `dns`, `web`, or `doc`); place the artifact somewhere an intruder would find it:
+   ```bash
+   canarynet new aws "prod-backup-keys"
+   canarynet new web "internal-wiki-link" --base-url https://canary.example.com
+   ```
+3. **Inspect the store** — list all tokens, or show one with its full material:
+   ```bash
+   canarynet list
+   canarynet show <TOKEN_ID>
+   ```
+4. **Scan logs** for triggered tokens; `scan` exits `2` when any canary fired so cron/CI can react:
+   ```bash
+   canarynet scan /var/log/auth.log /var/log/nginx/access.log
+   ```
+5. **Automate detection.** Use `--format json` (and `--store` to pin the token file) for machine output, and key alerting off the exit code:
+   ```bash
+   canarynet --format json scan /var/log/*.log || echo "CANARY TRIGGERED"; alert.sh
+   ```
+
 ## Why
 
 Security and intelligence teams need self-hosted canary token network — AWS keys, DNS, docs, web URLs without standing up heavyweight infrastructure. `canarynet` is single-purpose, scriptable, CI-friendly, and self-hostable: point it at a target, get prioritized findings in the format your workflow already speaks (table, JSON, SARIF, HTML), and wire it into agents over MCP when you want it autonomous.
