@@ -23,7 +23,6 @@ match becomes an :class:`Alert`. No network access is performed anywhere.
 from __future__ import annotations
 
 import json
-import re
 import secrets
 import string
 import time
@@ -173,10 +172,13 @@ def _iter_lines(text: str) -> Iterable[tuple[int, str]]:
 
 
 def scan_logs(tokens: Iterable[Token], text: str, source: str = "<stdin>") -> list[Alert]:
-    """Return one :class:`Alert` per (token-fingerprint, log-line) hit.
+    """Return one :class:`Alert` per (token, log-line) hit.
 
     Matching is literal substring search over each token's fingerprints, so it
-    works on any log format without parsing. A token may match multiple times.
+    works on any log format without parsing. A token may match on multiple
+    lines, but overlapping fingerprints of the same token (e.g. a trigger URL
+    that embeds the raw token id) collapse to one alert per line, keyed on
+    the longest matching fingerprint.
     """
     # Pre-compile a fingerprint -> token map. Longer fingerprints first so a
     # match on the full material is preferred for the excerpt context.
@@ -188,10 +190,14 @@ def scan_logs(tokens: Iterable[Token], text: str, source: str = "<stdin>") -> li
 
     alerts: list[Alert] = []
     for line_no, line in _iter_lines(text):
+        seen_tokens: set[str] = set()
         for fp, tok in fp_map:
+            if tok.id in seen_tokens:
+                continue
             idx = line.find(fp)
             if idx == -1:
                 continue
+            seen_tokens.add(tok.id)
             start = max(0, idx - 24)
             end = min(len(line), idx + len(fp) + 24)
             excerpt = line[start:end].strip()

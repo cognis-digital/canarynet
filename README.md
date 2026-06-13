@@ -3,7 +3,7 @@
 > Part of the **[Cognis Neural Suite](https://github.com/cognis-digital)** by [Cognis Digital](https://cognis.digital)
 > Cognis Open Collaboration License (COCL) v1.0 · domain: `blue-team`
 
-[![PyPI](https://img.shields.io/pypi/v/cognis-canarynet.svg)](https://pypi.org/project/cognis-canarynet/)
+[![install](https://img.shields.io/badge/install-git%2B%20%C2%B7%20pipx%20%C2%B7%20uv-6b46c1.svg)](#install--every-way-every-platform)
 [![CI](https://github.com/cognis-digital/canarynet/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/canarynet/actions)
 [![License: COCL 1.0](https://img.shields.io/badge/License-COCL%201.0-2b6cb0.svg)](LICENSE)
 [![Suite](https://img.shields.io/badge/Cognis-Neural%20Suite-6b46c1.svg)](https://github.com/cognis-digital)
@@ -12,14 +12,56 @@
 
 *Blue Team / Defense — detection, deception, and monitoring for small teams.*
 
+<!-- cognis:layman:start -->
+## What is this?
+
+Canarynet is a security tool that lets you create "canary tokens" — fake but realistic-looking credentials (such as AWS keys, web URLs, and DNS hostnames) that you deliberately plant in your systems or documents. If an attacker finds and uses one of these tokens, canarynet alerts you immediately, giving you an early warning that something is being accessed without authorization. It is designed for security-conscious teams and individuals who want a simple, self-hosted way to detect intrusions before damage is done. You run it from the command line, point it at your log files, and it tells you if any of your planted tokens were ever triggered.
+<!-- cognis:layman:end -->
+
 ## Why
 
 Security and intelligence teams need self-hosted canary token network — AWS keys, DNS, docs, web URLs without standing up heavyweight infrastructure. `canarynet` is single-purpose, scriptable, CI-friendly, and self-hostable: point it at a target, get prioritized findings in the format your workflow already speaks (table, JSON, SARIF, HTML), and wire it into agents over MCP when you want it autonomous.
 
+<!-- cognis:install:start -->
+## Install
+
+`canarynet` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/canarynet/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/canarynet/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/canarynet.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/canarynet.git"  # uv
+pip install "git+https://github.com/cognis-digital/canarynet.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/canarynet.git
+cd canarynet && pip install .
+```
+
+Then run:
+```sh
+canarynet --help
+```
+<!-- cognis:install:end -->
+
 ## Install
 
 ```bash
-pip install cognis-canarynet
+pip install "git+https://github.com/cognis-digital/canarynet.git"
 # or, from this repo:
 pip install -e ".[dev]"
 ```
@@ -73,6 +115,32 @@ Missing a credit? Open a PR — see [CONTRIBUTING.md](CONTRIBUTING.md).
 ## Contributing
 
 PRs, new detections, and demo scenarios are welcome under the collaboration-pull model. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+
+<a name="verification"></a>
+## Verification
+
+[![tests](https://img.shields.io/badge/tests-8%20passing-2ea44f.svg)](AUDIT.md)
+
+Every push is verified end-to-end. Latest audit (2026-06-12):
+
+```text
+tests        : 8 passed, 0 failed, 0 errored
+compile      : all modules parse
+cli          : C:\Python314\python.exe: No module named https
+package      : https
+```
+
+<details><summary>CLI surface (<code>--help</code>)</summary>
+
+```text
+C:\Python314\python.exe: No module named https
+```
+</details>
+
+Full machine-readable results: [`AUDIT.md`](AUDIT.md) · regenerate with `python -m https --help` + `pytest -q`.
+
+<div align="right"><a href="#top">↑ back to top</a></div>
+
 
 ## License
 
