@@ -5,14 +5,38 @@ Reads JSON findings on stdin and POSTs them to a URL (SIEM/Slack/Jira bridge).
 Usage:  <tool> scan . --format json | python integrations/webhook.py --url URL
 """
 from __future__ import annotations
-import argparse, sys, urllib.request
+
+import argparse
+import sys
+import urllib.request
+
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", required=True)
     ap.add_argument("--header", action="append", default=[], help="Key: Value")
     args = ap.parse_args()
+
+    if not args.url.startswith(("http://", "https://")):
+        print(
+            f"error: --url must start with http:// or https://, got {args.url!r}",
+            file=sys.stderr,
+        )
+        return 1
+
+    for h in args.header:
+        if ":" not in h:
+            print(
+                f"error: --header {h!r} must be in 'Key: Value' format",
+                file=sys.stderr,
+            )
+            return 1
+
     payload = sys.stdin.read().encode("utf-8")
+    if not payload.strip():
+        print("error: no input on stdin — nothing to post", file=sys.stderr)
+        return 1
+
     req = urllib.request.Request(args.url, data=payload, method="POST")
     req.add_header("Content-Type", "application/json")
     for h in args.header:
@@ -25,6 +49,7 @@ def main() -> int:
     except Exception as e:
         print(f"webhook error: {e}", file=sys.stderr)
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

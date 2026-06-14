@@ -88,6 +88,13 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     fmt = args.format
 
+    def _err(msg: str) -> int:
+        if fmt == "json":
+            print(json.dumps({"error": msg}), file=sys.stderr)
+        else:
+            print(f"error: {msg}", file=sys.stderr)
+        return 1
+
     try:
         store = TokenStore(args.store)
 
@@ -119,9 +126,12 @@ def main(argv=None) -> int:
             all_alerts = []
             for lf in args.logfile:
                 path = Path(lf)
-                if not path.exists():
+                if not path.is_file():
                     raise CanaryError(f"log file not found: {lf}")
-                text = path.read_text(encoding="utf-8", errors="replace")
+                try:
+                    text = path.read_text(encoding="utf-8", errors="replace")
+                except OSError as exc:
+                    raise CanaryError(f"cannot read log file {lf}: {exc}") from exc
                 all_alerts.extend(scan_logs(toks, text, source=str(path)))
             store.save()  # persist triggered counts / last_seen
             _emit([a.as_dict() for a in all_alerts], fmt)
@@ -132,12 +142,11 @@ def main(argv=None) -> int:
             return 0
 
     except CanaryError as exc:
-        msg = {"error": str(exc)}
-        if fmt == "json":
-            print(json.dumps(msg), file=sys.stderr)
-        else:
-            print(f"error: {exc}", file=sys.stderr)
-        return 1
+        return _err(str(exc))
+    except KeyboardInterrupt:
+        return _err("interrupted")
+    except Exception as exc:  # noqa: BLE001
+        return _err(f"unexpected error: {exc}")
 
     return 1
 

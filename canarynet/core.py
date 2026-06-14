@@ -104,6 +104,14 @@ def new_token(type_: str, label: str, base_domain: str = "canary.example.com",
         raise CanaryError(f"unknown token type {type_!r}; choose from {TOKEN_TYPES}")
     if not label or not label.strip():
         raise CanaryError("label must be a non-empty string")
+    if not base_domain or not base_domain.strip():
+        raise CanaryError("base_domain must be a non-empty string")
+    if not base_url or not base_url.strip():
+        raise CanaryError("base_url must be a non-empty string")
+    if not base_url.startswith(("http://", "https://")):
+        raise CanaryError(
+            f"base_url must start with http:// or https://, got {base_url!r}"
+        )
 
     cid = _canary_id()
     material: dict = {}
@@ -140,7 +148,24 @@ class TokenStore:
             raw = json.loads(self.path.read_text(encoding="utf-8") or "{}")
         except (json.JSONDecodeError, OSError) as exc:
             raise CanaryError(f"cannot read store {self.path}: {exc}") from exc
-        self.tokens = {tid: Token(**td) for tid, td in raw.get("tokens", {}).items()}
+        if not isinstance(raw, dict):
+            raise CanaryError(f"store {self.path}: expected a JSON object at root")
+        tokens_raw = raw.get("tokens", {})
+        if not isinstance(tokens_raw, dict):
+            raise CanaryError(f"store {self.path}: 'tokens' must be a JSON object")
+        loaded: dict[str, Token] = {}
+        for tid, td in tokens_raw.items():
+            if not isinstance(td, dict):
+                raise CanaryError(
+                    f"store {self.path}: token entry {tid!r} must be a JSON object"
+                )
+            try:
+                loaded[tid] = Token(**td)
+            except TypeError as exc:
+                raise CanaryError(
+                    f"store {self.path}: malformed token {tid!r}: {exc}"
+                ) from exc
+        self.tokens = loaded
 
     def save(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
