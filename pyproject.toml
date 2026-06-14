@@ -36,3 +36,6 @@ canarynet = "canarynet.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["canarynet"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
