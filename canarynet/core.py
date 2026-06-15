@@ -173,7 +173,7 @@ def _iter_lines(text: str) -> Iterable[tuple[int, str]]:
 
 
 def scan_logs(tokens: Iterable[Token], text: str, source: str = "<stdin>") -> list[Alert]:
-    """Return one :class:`Alert` per (token-fingerprint, log-line) hit.
+    """Return one :class:`Alert` per (token, log-line) hit (most-specific fingerprint).
 
     Matching is literal substring search over each token's fingerprints, so it
     works on any log format without parsing. A token may match multiple times.
@@ -188,10 +188,14 @@ def scan_logs(tokens: Iterable[Token], text: str, source: str = "<stdin>") -> li
 
     alerts: list[Alert] = []
     for line_no, line in _iter_lines(text):
+        seen_on_line: set[str] = set()
         for fp, tok in fp_map:
             idx = line.find(fp)
             if idx == -1:
                 continue
+            if tok.id in seen_on_line:   # one alert per (token, line); longest fp wins
+                continue
+            seen_on_line.add(tok.id)
             start = max(0, idx - 24)
             end = min(len(line), idx + len(fp) + 24)
             excerpt = line[start:end].strip()
