@@ -12,6 +12,67 @@
 
 *Blue Team / Defense — detection, deception, and monitoring for small teams.*
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ canarynet-emit --version
+canarynet 0.1.0
+```
+
+```console
+$ canarynet-emit --help
+usage: canarynet [-h] [--version] [--format {table,json}] [--store STORE]
+                 {new,list,show,rm,scan} ...
+
+Self-hosted canary token network.
+
+positional arguments:
+  {new,list,show,rm,scan}
+    new                 mint a new canary token
+    list                list all tokens
+    show                show one token with full material
+    rm                  delete a token
+    scan                scan log file(s) for triggered tokens
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+  --store STORE         path to token store JSON
+```
+
+> Blocks above are real `canarynet` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"Findings": [
+    {
+        "id": "1234567890",
+        "title": "Suspicious Activity Detected",
+        "description": "Anomalous network traffic detected from IP 192.168.1.100",
+        "created_at": "2023-02-20T14:30:00Z",
+        "updated_at": "2023-02-20T14:30:00Z",
+        "objects": [
+            {
+                "id": "1234567890-object-1",
+                "type": "indicator",
+                "name": "Suspicious IP",
+                "description": "Anomalous network traffic detected from IP 192.168.1.100"
+            }
+        ]
+    }
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. **Install** the `canarynet` command:

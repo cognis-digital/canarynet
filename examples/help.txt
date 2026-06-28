@@ -1,0 +1,20 @@
+$ canarynet-emit --help
+
+usage: canarynet [-h] [--version] [--format {table,json}] [--store STORE]
+                 {new,list,show,rm,scan} ...
+
+Self-hosted canary token network.
+
+positional arguments:
+  {new,list,show,rm,scan}
+    new                 mint a new canary token
+    list                list all tokens
+    show                show one token with full material
+    rm                  delete a token
+    scan                scan log file(s) for triggered tokens
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+  --store STORE         path to token store JSON
